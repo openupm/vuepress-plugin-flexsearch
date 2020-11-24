@@ -107,8 +107,7 @@ export default {
 
     searchOption() {
       const obj = { ...SEARCH_OPTIONS };
-      if (obj.encode === "cjk") {
-        obj.encode = "icase";
+      if (obj.tokenize === "cjk") {
         obj.tokenize = function(str) {
           return str.split("");
         }
