@@ -45,7 +45,7 @@
 import Flexsearch from "flexsearch";
 import { highlightText } from "./utils";
 
-/* global 
+/* global
 SEARCH_MAX_SUGGESTIONS
 SEARCH_PATHS
 SEARCH_HOTKEYS
@@ -104,6 +104,17 @@ export default {
       const repo = this.$site.repo ? 1 : 0;
       return navCount + repo <= 2;
     },
+
+    searchOption() {
+      const obj = { ...SEARCH_OPTIONS };
+      if (obj.encode === "cjk") {
+        obj.encode = "icase";
+        obj.tokenize = function(str) {
+          return str.split("");
+        }
+      }
+      return obj;
+    }
   },
 
   methods: {
@@ -188,7 +199,7 @@ export default {
     },
 
     setupFlexSearch() {
-      this.index = new Flexsearch(SEARCH_OPTIONS);
+      this.index = new Flexsearch(this.searchOption);
       const { pages } = this.$site;
       this.index.add(pages);
     },
