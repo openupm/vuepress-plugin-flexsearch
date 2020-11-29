@@ -109,8 +109,10 @@ export default {
       const obj = { ...SEARCH_OPTIONS };
       if (obj.tokenize === "cjk") {
         obj.tokenize = function(str) {
-          return str.split("");
-        }
+          const cjkItems = str.replace(/[\x00-\x7F]/g, "").split("");
+          const asciiItems = str.replace(/[^\x00-\x7F]/g, "").split(/\W+/);
+          return cjkItems.concat(asciiItems);
+        };
       }
       return obj;
     }
